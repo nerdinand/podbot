@@ -28,3 +28,13 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env}.exs"
+
+config :podbot, ecto_repos: [PodBot.Repo]
+
+config :podbot, PodBot.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  database: "podbot_dev",
+  username: "root",
+  password: "root",
+  hostname: "localhost",
+  port: "5432"

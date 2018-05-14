@@ -14,7 +14,8 @@ defmodule PodBot.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger]
+      extra_applications: [:logger],
+      mod: {PodBot.Application, []}
     ]
   end
 
@@ -22,7 +23,8 @@ defmodule PodBot.MixProject do
   defp deps do
     [
       {:slack, "~> 0.13.0"},
-      {:csv, "~> 2.1.0"}
+      {:postgrex, ">= 0.0.0"},
+      {:ecto, "~> 2.2"}
     ]
   end
 end

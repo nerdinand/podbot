@@ -8,10 +8,10 @@ defmodule PodBot do
 
   def handle_event(message = %{type: "message"}, slack, state) do
     cond do
-      SlackUtilities.mentioned?(message, slack) ->
+      PodBot.SlackUtilities.mentioned?(message, slack) ->
         handle_mentioned(message, slack, state)
 
-      SlackUtilities.private_conversation?(message) ->
+      PodBot.SlackUtilities.private_conversation?(message) ->
         handle_private(message, slack, state)
 
       true ->
@@ -24,17 +24,22 @@ defmodule PodBot do
   end
 
   def handle_private(message, slack, state) do
-    if String.contains?(SlackUtilities.safe_access_text(message), "magic word") do
-      send_message("```#{CsvUtilities.read_from_csv()}```", message.channel, slack)
+    if String.contains?(PodBot.SlackUtilities.safe_access_text(message), "magic word") do
+      links = PodBot.DataUtilities.read() |> Enum.map(&thing/1) |> Enum.join("\n")
+      send_message("```#{links}```", message.channel, slack)
     end
 
     {:ok, state}
   end
 
+  def thing(link) do
+    "#{link.username}, #{link.timestamp}, #{link.link}"
+  end
+
   def handle_mentioned(message, slack, state) do
     message_content =
       message.text
-      |> String.replace("#{SlackUtilities.mention_string(slack)} ", "")
+      |> String.replace("#{PodBot.SlackUtilities.mention_string(slack)} ", "")
       |> String.trim_leading("<")
       |> String.trim_trailing(">")
 
@@ -46,7 +51,7 @@ defmodule PodBot do
       |> Kernel.trunc()
       |> DateTime.from_unix!()
 
-    CsvUtilities.write_to_csv(timestamp, user_name, message_content)
+    PodBot.DataUtilities.write(timestamp, user_name, message_content)
 
     {:ok, state}
   end

@@ -1,4 +1,4 @@
-defmodule SlackUtilities do
+defmodule PodBot.SlackUtilities do
   def private_conversation?(message) do
     String.starts_with?(message.channel, "D")
   end
