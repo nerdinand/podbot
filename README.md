@@ -1,21 +1,9 @@
 # PodBot
 
-**TODO: Add description**
+PodBot is a Slack bot that integrates the [Podlove](https://podlove.org) universe with Slack.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `podbot` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:podbot, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/podbot](https://hexdocs.pm/podbot).
-
+1. Clone this repository.
+2. Run `mix deps.get` to install the necessary dependencies.
+3. Run the bot with `SLACK_TOKEN="xoxb-XXXXXXXXXXX-XXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXX" ./run.sh`

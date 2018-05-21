@@ -8,9 +8,16 @@ defmodule PodBot.Application do
   def start(_type, _args) do
     import Supervisor.Spec
 
+    slack_token = System.get_env("SLACK_TOKEN")
+
+    if slack_token == nil do
+      raise "SLACK_TOKEN environment variable must be set."
+    end
+
     # List all child processes to be supervised
     children = [
-      supervisor(PodBot.Repo, [])
+      supervisor(PodBot.Repo, []),
+      supervisor(Slack.Bot, [PodBot, [], slack_token])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
